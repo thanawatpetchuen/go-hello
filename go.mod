@@ -10,6 +10,7 @@ require (
 	github.com/fatih/color v1.9.0 // indirect
 	github.com/imdario/mergo v0.3.10 // indirect
 	github.com/labstack/echo v3.3.10+incompatible // indirect
+	github.com/labstack/echo-contrib v0.9.0
 	github.com/labstack/echo/v4 v4.1.16
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/pelletier/go-toml v1.8.0 // indirect
