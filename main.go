@@ -2,5 +2,5 @@ package main
 
 func main() {
 	a := InitializeApp()
-	a.InitEcho()
+	a.StartApp()
 }

@@ -1,44 +1,25 @@
 package app
 
 import (
-	"fmt"
-
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-
-	"hello/config"
-	"hello/handler"
 	"hello/route"
+	"hello/server"
 )
 
 type App struct {
 	AppName string
-	Echo    *echo.Echo
-	Handler handler.Handler
+	Server  server.Server
+	Routes  route.Routes
 }
 
-func (a *App) InitEcho() *echo.Echo {
-	e := echo.New()
-
-	// Middleware
-	e.Use(middleware.Logger())
-	e.Use(middleware.Recover())
-
-	route.InitRoutes(e, a.Handler)
-
-	c, _ := config.GetConfig()
-	fmt.Println(c.Port)
-
-	// Start server
-	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", c.Port)))
-
-	a.Echo = e
-
-	return e
+func (a *App) StartApp() {
+	a.Server.InitServer()
+	a.Routes.InitRoutes(a.Server.Echo)
+	a.Server.StartServer()
 }
 
-func NewApp(h handler.Handler) App {
+func NewApp(s server.Server, r route.Routes) App {
 	return App{
-		Handler: h,
+		Server: s,
+		Routes: r,
 	}
 }

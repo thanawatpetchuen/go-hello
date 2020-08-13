@@ -8,14 +8,20 @@ package main
 import (
 	"hello/app"
 	"hello/handler"
+	"hello/route"
+	"hello/server"
 	"hello/service"
 )
 
 // Injectors from wire.go:
 
 func InitializeApp() app.App {
+	serverServer := server.NewServer()
 	serviceService := service.NewService()
 	handlerHandler := handler.NewHandler(serviceService)
-	appApp := app.NewApp(handlerHandler)
+	helloHandler := handler.NewHelloHandler(serviceService)
+	authHandler := handler.NewAuthHandler()
+	routes := route.NewRoutes(handlerHandler, helloHandler, authHandler)
+	appApp := app.NewApp(serverServer, routes)
 	return appApp
 }

@@ -5,7 +5,6 @@ import (
 	"hello/service"
 	"net/http"
 
-	"github.com/google/wire"
 	"github.com/labstack/echo/v4"
 )
 
@@ -29,4 +28,4 @@ func NewHandler(s service.Service) Handler {
 	}
 }
 
-var HandlerSet = wire.NewSet(NewHandler, service.NewService)
+// var HandlerSet = wire.NewSet(NewHandler, service.NewService)

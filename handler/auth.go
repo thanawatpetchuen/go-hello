@@ -9,7 +9,10 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func Login(c echo.Context) error {
+type AuthHandler struct {
+}
+
+func (a AuthHandler) Login(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 	u := user.User{
@@ -28,4 +31,8 @@ func Login(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, res)
+}
+
+func NewAuthHandler() AuthHandler {
+	return AuthHandler{}
 }

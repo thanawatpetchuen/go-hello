@@ -4,12 +4,14 @@ package main
 
 import (
 	"hello/app"
-	"hello/handler"
+	"hello/route"
+	"hello/server"
+	"hello/service"
 
 	"github.com/google/wire"
 )
 
 func InitializeApp() app.App {
-	wire.Build(app.NewApp, handler.HandlerSet)
+	wire.Build(app.NewApp, server.NewServer, route.AllHandlers, service.NewService)
 	return app.App{}
 }
