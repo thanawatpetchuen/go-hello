@@ -10,7 +10,12 @@ import (
 	"hello/route"
 )
 
-func InitEcho() *echo.Echo {
+type App struct {
+	AppName string
+	Echo    *echo.Echo
+}
+
+func (a *App) InitEcho() *echo.Echo {
 	e := echo.New()
 
 	// Middleware
@@ -24,5 +29,12 @@ func InitEcho() *echo.Echo {
 
 	// Start server
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", c.Port)))
+
+	a.Echo = e
+
 	return e
+}
+
+func NewApp() App {
+	return App{}
 }

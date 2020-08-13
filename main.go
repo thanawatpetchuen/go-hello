@@ -1,10 +1,7 @@
 package main
 
-import (
-	"hello/app"
-)
-
 func main() {
+	a := InitializeApp()
 
-	app.InitEcho()
+	a.InitEcho()
 }
