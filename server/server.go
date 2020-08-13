@@ -13,24 +13,24 @@ type Server struct {
 	Config config.Config
 }
 
-func (s *Server) InitServer() {
+func InitServer() *echo.Echo {
 	e := echo.New()
 
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	c, _ := config.GetConfig()
-
-	// Start server
-	s.Echo = e
-	s.Config = c
+	return e
 }
 
 func (s Server) StartServer() {
 	s.Echo.Logger.Fatal(s.Echo.Start(fmt.Sprintf(":%d", s.Config.Port)))
 }
 
-func NewServer() Server {
-	return Server{}
+func NewServer(c config.Config) Server {
+	e := InitServer()
+	return Server{
+		Echo:   e,
+		Config: c,
+	}
 }

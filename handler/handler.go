@@ -2,6 +2,7 @@ package handler
 
 import (
 	"hello/model"
+	"hello/server"
 	"hello/service"
 	"net/http"
 
@@ -10,6 +11,11 @@ import (
 
 type Handler struct {
 	Service service.Service
+	Server  server.Server
+}
+
+func (h Handler) InitRoutes() {
+	h.Server.Echo.GET("/", h.Hello)
 }
 
 func (h Handler) Hello(c echo.Context) error {
@@ -22,10 +28,13 @@ func (h Handler) Hello(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
-func NewHandler(s service.Service) Handler {
-	return Handler{
+func NewHandler(s service.Service, serve server.Server) Handler {
+	h := Handler{
 		Service: s,
+		Server:  serve,
 	}
+	h.InitRoutes()
+	return h
 }
 
 // var HandlerSet = wire.NewSet(NewHandler, service.NewService)

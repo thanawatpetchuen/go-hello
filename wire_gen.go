@@ -7,6 +7,7 @@ package main
 
 import (
 	"hello/app"
+	"hello/config"
 	"hello/handler"
 	"hello/route"
 	"hello/server"
@@ -15,13 +16,18 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeApp() app.App {
-	serverServer := server.NewServer()
+func InitializeApp() (app.App, error) {
+	configConfig, err := config.NewConfig()
+	if err != nil {
+		return app.App{}, err
+	}
+	serverServer := server.NewServer(configConfig)
 	serviceService := service.NewService()
-	handlerHandler := handler.NewHandler(serviceService)
-	helloHandler := handler.NewHelloHandler(serviceService)
-	authHandler := handler.NewAuthHandler()
-	routes := route.NewRoutes(handlerHandler, helloHandler, authHandler)
+	handlerHandler := handler.NewHandler(serviceService, serverServer)
+	helloHandler := handler.NewHelloHandler(serviceService, serverServer)
+	authHandler := handler.NewAuthHandler(serverServer)
+	restrictHandler := handler.NewRestrictHandler(serverServer)
+	routes := route.NewRoutes(serverServer, handlerHandler, helloHandler, authHandler, restrictHandler)
 	appApp := app.NewApp(serverServer, routes)
-	return appApp
+	return appApp, nil
 }

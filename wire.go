@@ -4,6 +4,7 @@ package main
 
 import (
 	"hello/app"
+	"hello/config"
 	"hello/route"
 	"hello/server"
 	"hello/service"
@@ -11,7 +12,7 @@ import (
 	"github.com/google/wire"
 )
 
-func InitializeApp() app.App {
-	wire.Build(app.NewApp, server.NewServer, route.AllHandlers, service.NewService)
-	return app.App{}
+func InitializeApp() (app.App, error) {
+	wire.Build(app.NewApp, server.NewServer, config.NewConfig, route.AllHandlers, service.NewService)
+	return app.App{}, nil
 }

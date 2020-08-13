@@ -12,8 +12,7 @@ type App struct {
 }
 
 func (a *App) StartApp() {
-	a.Server.InitServer()
-	a.Routes.InitRoutes(a.Server.Echo)
+	a.Routes.InitRoutes()
 	a.Server.StartServer()
 }
 

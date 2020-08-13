@@ -3,6 +3,7 @@ package handler
 import (
 	"hello/auth"
 	"hello/model"
+	"hello/server"
 	"hello/user"
 	"net/http"
 
@@ -10,6 +11,11 @@ import (
 )
 
 type AuthHandler struct {
+	Server server.Server
+}
+
+func (a AuthHandler) InitRoutes() {
+	a.Server.Echo.POST("/login", a.Login)
 }
 
 func (a AuthHandler) Login(c echo.Context) error {
@@ -33,6 +39,10 @@ func (a AuthHandler) Login(c echo.Context) error {
 	return c.JSON(http.StatusOK, res)
 }
 
-func NewAuthHandler() AuthHandler {
-	return AuthHandler{}
+func NewAuthHandler(s server.Server) AuthHandler {
+	ah := AuthHandler{
+		Server: s,
+	}
+	ah.InitRoutes()
+	return ah
 }

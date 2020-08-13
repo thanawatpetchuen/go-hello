@@ -1,6 +1,6 @@
 package main
 
 func main() {
-	a := InitializeApp()
+	a, _ := InitializeApp()
 	a.StartApp()
 }

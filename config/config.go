@@ -18,3 +18,8 @@ func GetConfig() (Config, error) {
 	}
 	return conf, nil
 }
+
+func NewConfig() (Config, error) {
+	conf, _ := GetConfig()
+	return conf, nil
+}
