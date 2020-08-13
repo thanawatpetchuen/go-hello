@@ -9,8 +9,8 @@ import (
 )
 
 // Handler
-func InitRoutes(e *echo.Echo) {
-	e.GET("/", handler.Hello)
+func InitRoutes(e *echo.Echo, h handler.Handler) {
+	e.GET("/", h.Hello)
 	e.POST("/login", handler.Login)
 
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{

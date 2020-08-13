@@ -7,12 +7,14 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	"hello/config"
+	"hello/handler"
 	"hello/route"
 )
 
 type App struct {
 	AppName string
 	Echo    *echo.Echo
+	Handler handler.Handler
 }
 
 func (a *App) InitEcho() *echo.Echo {
@@ -22,7 +24,7 @@ func (a *App) InitEcho() *echo.Echo {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	route.InitRoutes(e)
+	route.InitRoutes(e, a.Handler)
 
 	c, _ := config.GetConfig()
 	fmt.Println(c.Port)
@@ -35,6 +37,8 @@ func (a *App) InitEcho() *echo.Echo {
 	return e
 }
 
-func NewApp() App {
-	return App{}
+func NewApp(h handler.Handler) App {
+	return App{
+		Handler: h,
+	}
 }
