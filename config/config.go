@@ -20,6 +20,5 @@ func GetConfig() (Config, error) {
 }
 
 func NewConfig() (Config, error) {
-	conf, _ := GetConfig()
-	return conf, nil
+	return GetConfig()
 }
