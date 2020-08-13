@@ -36,5 +36,3 @@ func NewHandler(s service.Service, serve server.Server) Handler {
 	h.InitRoutes()
 	return h
 }
-
-// var HandlerSet = wire.NewSet(NewHandler, service.NewService)
